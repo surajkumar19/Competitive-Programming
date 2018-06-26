@@ -4,15 +4,13 @@ import unittest
 class TempTracker(object):
     # Implement methods to track the max, min, mean, and mode
 
-    max = 0
-    min = 110
+    max = -1
+    min = 111
     mean = 0
+    max_freq = 0
     mode = 0
     count = 0
-    arr = []
-
-    for i in range(111):
-        arr.append(0)
+    temps = [0] * 111
 
     def insert(self, temperature):
 
@@ -20,11 +18,12 @@ class TempTracker(object):
         self.min = temperature if temperature < self.min else self.min
         self.mean = ((self.mean * self.count) + temperature)/(self.count+1)
         self.count += 1
-        self.arr[temperature] += 1
-        temp = max(self.arr)
-        temp_mode = [i for i, e in enumerate(self.arr) if e == temp]
-
-        self.mode = temp_mode[0] if len(temp_mode) == 1 else temp_mode
+        self.temps[temperature] += 1
+        if self.temps[temperature] > self.max_freq:
+            self.max_freq = self.temps[temperature]
+            self.mode = [temperature]
+        elif self.temps[temperature] == self.max_freq:
+            self.mode.append(temperature)
 
     def get_max(self):
         return self.max
@@ -36,6 +35,8 @@ class TempTracker(object):
         return self.mean
 
     def get_mode(self):
+        if len(self.mode) == 1:
+            return self.mode[0]
         return self.mode
 
 
