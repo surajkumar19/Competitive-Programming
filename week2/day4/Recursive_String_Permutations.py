@@ -29,7 +29,7 @@ def permute(a, l, r, lis):
             a[l], a[i] = a[i], a[l]
 
 
-Tests
+# Tests
 
 class Test(unittest.TestCase):
 
